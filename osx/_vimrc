@@ -1,0 +1,206 @@
+" ##########################
+" OSX Native Vim
+" Location : ~/_vimrc
+
+set langmenu=en_US.UTF-8
+set nocompatible
+filetype off
+
+" ###############################  Vundle Settings 
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" vim-session's dependency
+Plugin 'xolox/vim-misc'
+
+" Let's you save sessions in Vim 
+Plugin 'xolox/vim-session'
+
+" Add support for coffee script
+Plugin 'kchmck/vim-coffee-script'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+" ### Making global session local, in turn the session working directory specfic  
+:let g:session_autoload='yes'
+:let g:session_autosave='yes'
+:let g:session_directory='./.vim/sessions'
+
+" ###############################  Vundle Settings 
+
+" ###############################  My Settings 
+
+colorscheme torte
+set hlsearch
+
+" ### Replace \ with /
+:map <F3> :.,$s/\\/\//g<CR> 
+
+"set gfn=Bitstream\ Vera\ Sans\ Mono:h10
+"set/ gfn=Courier\ New:h10
+
+set gfn=Consolas:h10
+set guioptions-=T  "Removes the toolbar
+
+map! <F15> \
+map! <F16> _
+:map! <F17> <BAR>
+map! <C-Del> <S-C-Right><Del>
+"map <F2> : call JsBeautify()<cr>
+:set pastetoggle=<F2>
+set expandtab
+set smarttab
+"set autoindent
+
+syntax on
+syntax enable
+
+
+"This stopping me from doing a lot of indentation
+:set autoindent
+:set cindent
+:set nu
+
+"This is to automatically edit this _vimrc file in buffer and autoreload as it saves
+":let mapleader=","
+"map <leader>vimrc :tabe $MYVIMRC<cr>
+
+" ###############################  Influenced by Ruby 
+:set shiftwidth=2
+:set tabstop=2
+
+" ### Remove trailing spaces upon save
+autocmd BufWritePre *.rb :%s/\s\+$//e
+autocmd BufWritePre *.yml :%s/\s\+$//e
+autocmd BufWritePre *.coffee :%s/\s\+$//e
+autocmd BufWritePre *.erb :%s/\s\+$//e
+
+"temporary 
+"set fileencodings=iso-2022-jp,utf-8,cp932,euc-jp,default,latin
+"set fileencodings=guess,utf-16,utf-8,ucs-bom,ucs-21e,ucs-2,iso-2022-jp-3,euc-jisx0213,euc-jp
+
+"set encoding=sjis
+"""""""""""""""""""""""" my settings """""""""""""""""""""""""
+"let myEncoding = 'false'
+"let s:myEncoding = 1
+
+"""""""""""""" encoding """""""""""
+"if s:myEncoding == 1
+"
+"  set encoding=utf-8
+"  set fileencoding=utf-8
+"  
+"  
+"  " 文字コードの自動認識
+"  if &encoding !=# 'utf-8'
+"  
+"    set encoding=japan
+"  
+"    set fileencoding=japan
+"  
+"  endif
+"  
+"  if has('iconv')
+"  
+"    let s:enc_euc = 'euc-jp'
+"  
+"    let s:enc_jis = 'iso-2022-jp'
+"  
+"    " iconvがeucJP-msに対応しているかをチェック
+"  
+"    if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
+"  
+"      let s:enc_euc = 'eucjp-ms'
+"  
+"      let s:enc_jis = 'iso-2022-jp-3'
+"  
+"    " iconvがJISX0213に対応しているかをチェック
+"  
+"    elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
+"  
+"      let s:enc_euc = 'euc-jisx0213'
+"  
+"      let s:enc_jis = 'iso-2022-jp-3'
+"  
+"    endif
+"  
+"    " fileencodingsを構築
+"    if &encoding ==# 'utf-8'
+"  
+"      let s:fileencodings_default = &fileencodings
+"  
+"      let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
+"  
+"      let &fileencodings = &fileencodings .','. s:fileencodings_default
+"  
+"      unlet s:fileencodings_default
+"  
+"    else
+"  
+"      let &fileencodings = &fileencodings .','. s:enc_jis
+"  
+"      set fileencodings+=utf-8,ucs-2le,ucs-2
+"  
+"      if &encoding =~# '^\(euc-jp\|euc-jisx0213\|eucjp-ms\)$'
+"  
+"        set fileencodings+=cp932
+"  
+"        set fileencodings-=euc-jp
+"  
+"        set fileencodings-=euc-jisx0213
+"  
+"        set fileencodings-=eucjp-ms
+"  
+"        let &encoding = s:enc_euc
+"  
+"        let &fileencoding = s:enc_euc
+"  
+"      else
+"  
+"        let &fileencodings = &fileencodings .','. s:enc_euc
+"  
+"      endif
+"  
+"    endif
+"  
+"    " 定数を処分
+"    unlet s:enc_euc
+"  
+"    unlet s:enc_jis
+"  
+"  endif
+"  
+"  " UTF-8の□や○でカーソル位置がずれないようにする
+"  
+"  if exists("&ambiwidth")
+"  
+"    set ambiwidth=double
+"  
+"  endif
+"  
+"  " 改行コードの自動認識
+"  set fileformats=unix,dos,mac
+"  
+""endif
+" 
+  """"""""""""""" encoding """""""""""
+
