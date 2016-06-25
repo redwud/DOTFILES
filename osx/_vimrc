@@ -49,7 +49,7 @@ filetype plugin indent on    " required
 
 " ###############################  My Settings 
 
-colorscheme torte
+colorscheme peachpuff 
 set hlsearch
 
 " ### Replace \ with /
@@ -66,8 +66,12 @@ map! <F16> _
 :map! <F17> <BAR>
 map! <C-Del> <S-C-Right><Del>
 "map <F2> : call JsBeautify()<cr>
-:set pastetoggle=<F2>
+set pastetoggle=<F2>
+
 set expandtab
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
 set smarttab
 "set autoindent
 
@@ -85,14 +89,24 @@ syntax enable
 "map <leader>vimrc :tabe $MYVIMRC<cr>
 
 " ###############################  Influenced by Ruby 
-:set shiftwidth=2
-:set tabstop=2
 
 " ### Remove trailing spaces upon save
 autocmd BufWritePre *.rb :%s/\s\+$//e
 autocmd BufWritePre *.yml :%s/\s\+$//e
 autocmd BufWritePre *.coffee :%s/\s\+$//e
 autocmd BufWritePre *.erb :%s/\s\+$//e
+
+" Add support for jbuilder"
+"
+
+function! s:setf(filetype) abort
+  if &filetype !=# a:filetype
+    let &filetype = a:filetype
+  endif
+endfunction
+
+" Jbuilder
+au BufNewFile,BufRead *.jbuilder                call s:setf('ruby')
 
 "temporary 
 "set fileencodings=iso-2022-jp,utf-8,cp932,euc-jp,default,latin
