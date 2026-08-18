@@ -39,6 +39,37 @@ python3 daily/full_path.py ./daily
 
 If no path is supplied, the current directory is used. The resolved path is still printed if no supported clipboard utility is available, but the script exits with an error status.
 
+## Neovim Configuration
+
+The repository includes a modern, Python-focused Neovim starter configuration in `daily/.config/nvim/`.
+
+### Installation
+
+To use this configuration, link the directory to your system's Neovim configuration directory:
+
+```sh
+ln -s /path/to/dotfiles/daily/.config/nvim ~/.config/nvim
+```
+
+Upon launching Neovim, `lazy.nvim` will automatically bootstrap and install the configured plugins.
+
+### Features
+
+- **Plugin Manager**: Managed via [lazy.nvim](https://github.com/folke/lazy.nvim).
+- **Theme**: [tokyonight.nvim](https://github.com/folke/tokyonight.nvim).
+- **Highlighting & Indentation**: [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) with auto-installed parsers for Python, Lua, JSON, TOML, YAML, and Markdown.
+- **Fuzzy Finder**: [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) for files, buffers, and grep searches.
+- **LSP Support**: Automatically configures LSP servers via [mason.nvim](https://github.com/williamboman/mason.nvim) and [mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim). Python support includes `pyright` and `ruff`.
+- **Auto-Formatting**: Configured via [conform.nvim](https://github.com/stevearc/conform.nvim) to format Python files using `isort` and `black` on save.
+- **Quality of Life**:
+  - Automatically trims trailing whitespace on save for supported filetypes.
+  - Keeps cursor centered with scroll offsets.
+  - Shares system clipboard via `unnamedplus`.
+
+### Custom Commands
+
+- **`:ToCheckBox`**: Converts checklist items (e.g., lines containing `[x]`, `[ ] ` or starting with 4 spaces) into a cleaner format. It replaces `[x]` with `✅`, strips empty `[ ] ` checkbox markers, and removes four leading spaces. This is useful for formatting task lists and clean copy-pasting.
+
 ## Development
 
 Run a quick syntax check for all scripts with:
