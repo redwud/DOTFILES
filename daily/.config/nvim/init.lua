@@ -70,6 +70,8 @@ require("lazy").setup({
       vim.cmd.colorscheme("tokyonight")
     end
   },
+
+  -- Treesitter highlighting
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate", config = function()
       require("nvim-treesitter.configs").setup({
         ensure_installed = { "lua", "python", "json", "toml", "yaml", "markdown" },
@@ -78,55 +80,28 @@ require("lazy").setup({
       })
     end
   },
---  {
---    "nvim-treesitter/nvim-treesitter",
---    build = ":TSUpdate",
---    config = function()
---      local ok, configs = pcall(require, "nvim-treesitter.configs")
---      if not ok then
---        vim.notify("nvim-treesitter is not installed/loaded", vim.log.levels.WARN)
---        return
---      end
---      configs.setup({
---        ensure_installed = { "lua", "python", "json", "toml", "yaml", "markdown" },
---        highlight = { enable = true },
---        indent = { enable = true },
---      })
---    end,
---  },
-  -- Fuzzy finder (optional but extremely useful)
-  --   { "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" }, config = function()
-  --       local telescope = require("telescope")
-  --       telescope.setup({})
-  --       map("n", "<leader>ff", require("telescope.builtin").find_files, { desc = "Find files" })
-  --       map("n", "<leader>fg", require("telescope.builtin").live_grep, { desc = "Live grep" })
-  --       map("n", "<leader>fb", require("telescope.builtin").buffers, { desc = "Buffers" })
-  --       map("n", "<leader>fw", require("telescope.builtin").grep_string, { desc = "Grep word under cursor" })
-  --       map("n", "<leader>fm", require("telescope.builtin").grep_string, { desc = "Grep word match under cursor"}, { word_match = "-w" } )
-  --   end
-  --   },
 
-   { "nvim-telescope/telescope.nvim",
-     dependencies = { "nvim-lua/plenary.nvim" },
-     config = function()
-       local telescope = require("telescope")
-       local builtin = require("telescope.builtin")
+  { "nvim-telescope/telescope.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      local telescope = require("telescope")
+      local builtin = require("telescope.builtin")
 
-       telescope.setup({})
+      telescope.setup({})
 
-       map("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
-       map("n", "<leader>fg", builtin.live_grep,  { desc = "Live grep" })
-       map("n", "<leader>fb", builtin.buffers,    { desc = "Buffers" })
+      map("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
+      map("n", "<leader>fg", builtin.live_grep,  { desc = "Live grep" })
+      map("n", "<leader>fb", builtin.buffers,    { desc = "Buffers" })
 
-       -- Grep word under cursor (default behavior)
-       map("n", "<leader>fw", builtin.grep_string, { desc = "Grep word under cursor" })
+      -- Grep word under cursor (default behavior)
+      map("n", "<leader>fw", builtin.grep_string, { desc = "Grep word under cursor" })
 
-       -- Grep whole word under cursor (rg -w)
-       map("n", "<leader>fm", function()
-         builtin.grep_string({ word_match = "-w" })
-       end, { desc = "Grep whole word under cursor" })
-     end
-   },
+      -- Grep whole word under cursor (rg -w)
+      map("n", "<leader>fm", function()
+        builtin.grep_string({ word_match = "-w" })
+      end, { desc = "Grep whole word under cursor" })
+    end
+  },
 
   -- Git signs in gutter
   { "lewis6991/gitsigns.nvim", config = function()
