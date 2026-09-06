@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 """Print a path as an absolute path and copy it to the clipboard."""
 
 from __future__ import annotations

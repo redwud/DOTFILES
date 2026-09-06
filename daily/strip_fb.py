@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import argparse
 import sys
 from urllib.parse import parse_qsl, unquote, urlencode, urlparse, urlunparse

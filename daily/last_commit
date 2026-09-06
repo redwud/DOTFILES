@@ -1,0 +1,2 @@
+#!/usr/bin/env bash 
+git show HEAD~0 --pretty=format:"%h" --no-patch
