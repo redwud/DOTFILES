@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 import argparse
+import shutil
+import subprocess
 import sys
 from urllib.parse import parse_qsl, unquote, urlencode, urlparse, urlunparse
 
@@ -16,6 +18,27 @@ FB_TRACKING_PARAMS = {
 }
 
 SAFE_SCHEMES = {"http", "https"}
+
+
+def copy_to_clipboard(text: str) -> None:
+    """Copy text with the first supported system clipboard command."""
+    clipboard_commands = (
+        ("pbcopy",),
+        ("wl-copy",),
+        ("xclip", "-selection", "clipboard"),
+        ("xsel", "--clipboard", "--input"),
+        ("clip",),
+    )
+
+    for command in clipboard_commands:
+        if shutil.which(command[0]):
+            subprocess.run(command, input=text, text=True, check=True)
+            return
+
+    raise RuntimeError(
+        "No supported clipboard utility found "
+        "(tried pbcopy, wl-copy, xclip, xsel, and clip)."
+    )
 
 
 def clean_facebook_url(url: str) -> str:
@@ -111,7 +134,11 @@ if __name__ == "__main__":
     try:
         cleaned = clean_facebook_url(args.url)
         print("Cleaned URL:")
-        print(cleaned)
+        print(cleaned, flush=True)
+        copy_to_clipboard(cleaned)
     except ValueError as err:
         print(f"Error: {err}", file=sys.stderr)
+        sys.exit(1)
+    except (OSError, RuntimeError, subprocess.CalledProcessError) as err:
+        print(f"Could not copy URL to clipboard: {err}", file=sys.stderr)
         sys.exit(1)
